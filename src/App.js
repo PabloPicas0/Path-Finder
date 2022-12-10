@@ -1,13 +1,12 @@
 import './App.css';
-import { useParams } from './components/context';
+
+import NavBar from './components/navbar';
 
 function App() {
 
   return (
-    <div className="App">
-      <header className="App-header">
-       
-      </header>
+    <div>
+      <NavBar />
     </div>
   );
 }
