@@ -1,1 +1,16 @@
+.board {
+    width: 100%;
+    height: calc(100vh - min(20vh, 100px));
+    background-color: #000;
+    display: grid;
+    grid-template-rows: repeat(26, 1fr);
+    grid-template-columns: repeat(50, 1fr);
+    gap: 1px;
+}
 
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
