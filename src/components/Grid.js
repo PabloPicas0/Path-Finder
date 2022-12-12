@@ -24,7 +24,39 @@ export function GridBoard() {
         }
 
         return (
-          <div key={idx} ref={elem} className={clases.join("")}>
+          <div
+            key={idx}
+            ref={elem}
+            className={clases.join("")}
+            onMouseDown={() => {setEdit(true)}}
+            onMouseUp={() => {setEdit(false)}}
+            onMouseMove={() => {
+              if (!edit) return;
+              const current = grid[yidx][xidx];
+              if (current.isstart || current.istarget) return;
+
+              switch (mode) {
+                case "setStart":
+                  let newGrid = grid.map((element) => {
+                    return element.map((item) => {
+                      if (!item.isstart) return item;
+                      return { ...item, isstart: false };
+                    });
+                  });
+
+                  newGrid[yidx][xidx] = {
+                    ...newGrid[yidx][xidx],
+                    isstart: true,
+                    istarget: false,
+                    iswall: false,
+                    weight: 1,
+                  };
+
+                  start.current = {x: xidx, y:yidx}
+                  setGrid(newGrid);
+                  break;
+              }
+            }}>
             {cell.weight > 1 ? <Coronavirus /> : null}
             {cell.isstart ? <FmdGood /> : null}
             {cell.istarget ? <EmojiFlags /> : null}

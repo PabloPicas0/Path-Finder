@@ -16,7 +16,7 @@ export const ParamsProvider = ({ children }) => {
   const [edit, setEdit] = useState(false);
   const [reset, setReset] = useState(false);
   const start = useRef({ x: 25, y: 13 });
-  const end = useRef({ x: 45, y: 21 });
+  const end = useRef({ x: 1, y: 1 });
 
   const resetGrid = () => {
     setGrid(createGrid(50, 26));

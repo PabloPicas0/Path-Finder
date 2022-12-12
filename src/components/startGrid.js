@@ -11,7 +11,7 @@ export function createGrid (width, height) {
     }
 
     grid[Math.floor(height/2)][Math.floor(width/2)].isstart = true
-    grid[height - 5][width - 5].istarget = true
-
+    grid[height - 25][width - 49].istarget = true
+    
     return grid
 }

@@ -1,6 +1,6 @@
 import './App.css';
-import { GridBoard } from './components/Grid';
 
+import { GridBoard } from './components/Grid';
 import NavBar from './components/navbar';
 
 function App() {
