@@ -37,24 +37,44 @@ export function GridBoard() {
 
               switch (mode) {
                 case "setStart":
-                  let newGrid = grid.map((element) => {
+                  let newGridStart = grid.map((element) => {
                     return element.map((item) => {
                       if (!item.isstart) return item;
                       return { ...item, isstart: false };
                     });
                   });
 
-                  newGrid[yidx][xidx] = {
-                    ...newGrid[yidx][xidx],
+                  newGridStart[yidx][xidx] = {
+                    ...newGridStart[yidx][xidx],
                     isstart: true,
                     istarget: false,
                     iswall: false,
                     weight: 1,
                   };
 
-                  start.current = {x: xidx, y:yidx}
-                  setGrid(newGrid);
+                  start.current = {x: xidx, y: yidx}
+                  setGrid(newGridStart);
                   break;
+                
+                  case "setTarget": 
+                  let newGridTarget = grid.map(element => {
+                    return element.map(item => {
+                      if(!item.istarget) return item
+                      return {...item, istarget: false}
+                    })
+                  })
+
+                  newGridTarget[yidx][xidx] = {
+                    ...newGridTarget[yidx][xidx],
+                    isstart: false,
+                    istarget: true,
+                    iswall: false,
+                    weight: 1,
+                  };
+
+                  end.current = {x: xidx, y: yidx}
+                  setGrid(newGridTarget)
+                  break
               }
             }}>
             {cell.weight > 1 ? <Coronavirus /> : null}
