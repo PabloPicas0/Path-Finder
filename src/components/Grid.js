@@ -6,7 +6,8 @@ import { Coronavirus, EmojiFlags, FmdGood } from "@mui/icons-material";
 import { Box } from "@mui/material";
 
 export function GridBoard() {
-  const { grid, setGrid, edit, setEdit, mode, run, reset, algo, start, end } = useParams()
+  const { grid, setGrid, edit, setEdit, mode, run, reset, algo, start, end } =
+    useParams();
 
   const [refArray, setRefArray] = useState(makeRefArray(grid));
 
@@ -28,8 +29,12 @@ export function GridBoard() {
             key={idx}
             ref={elem}
             className={clases.join("")}
-            onMouseDown={() => {setEdit(true)}}
-            onMouseUp={() => {setEdit(false)}}
+            onMouseDown={() => {
+              setEdit(true);
+            }}
+            onMouseUp={() => {
+              setEdit(false);
+            }}
             onMouseMove={() => {
               if (!edit) return;
               const current = grid[yidx][xidx];
@@ -52,17 +57,17 @@ export function GridBoard() {
                     weight: 1,
                   };
 
-                  start.current = {x: xidx, y: yidx}
+                  start.current = { x: xidx, y: yidx };
                   setGrid(newGridStart);
                   break;
-                
-                  case "setTarget": 
-                  let newGridTarget = grid.map(element => {
-                    return element.map(item => {
-                      if(!item.istarget) return item
-                      return {...item, istarget: false}
-                    })
-                  })
+
+                case "setTarget":
+                  let newGridTarget = grid.map((element) => {
+                    return element.map((item) => {
+                      if (!item.istarget) return item;
+                      return { ...item, istarget: false };
+                    });
+                  });
 
                   newGridTarget[yidx][xidx] = {
                     ...newGridTarget[yidx][xidx],
@@ -72,9 +77,23 @@ export function GridBoard() {
                     weight: 1,
                   };
 
-                  end.current = {x: xidx, y: yidx}
-                  setGrid(newGridTarget)
-                  break
+                  end.current = { x: xidx, y: yidx };
+                  setGrid(newGridTarget);
+                  break;
+
+                case "addBricks":
+                  let newGridBrick = grid.slice()
+
+                  newGridBrick[yidx][xidx] = {
+                    ...newGridBrick[yidx][xidx],
+                    isstart: false,
+                    istarget: false,
+                    iswall: true,
+                    weight: 1,
+                  };
+
+                  setGrid(newGridBrick)
+                  break;
               }
             }}>
             {cell.weight > 1 ? <Coronavirus /> : null}
