@@ -38,10 +38,11 @@ export function GridBoard() {
             onMouseMove={() => {
               if (!edit) return;
               const current = grid[yidx][xidx];
-              if (current.isstart || current.istarget) return;
+              if (current.isstart || current.istarget) return; // prevents form adding walls and weight on start and target cells
 
               switch (mode) {
                 case "setStart":
+                  //Make new clear grid with all values to false 
                   let newGridStart = grid.map((element) => {
                     return element.map((item) => {
                       if (!item.isstart) return item;
@@ -49,6 +50,8 @@ export function GridBoard() {
                     });
                   });
 
+
+                  //Give this clear grid new start value based on his index
                   newGridStart[yidx][xidx] = {
                     ...newGridStart[yidx][xidx],
                     isstart: true,
@@ -57,11 +60,13 @@ export function GridBoard() {
                     weight: 1,
                   };
 
+                  // Set updated values of new grid 
                   start.current = { x: xidx, y: yidx };
                   setGrid(newGridStart);
                   break;
 
                 case "setTarget":
+                  //Here we have same proceure as above but for target
                   let newGridTarget = grid.map((element) => {
                     return element.map((item) => {
                       if (!item.istarget) return item;
@@ -82,8 +87,10 @@ export function GridBoard() {
                   break;
 
                 case "addBricks":
+                  //Make a shallow coppy of grid
                   let newGridBrick = grid.slice();
 
+                  //Set wall on new shallow copy based on y and x index 
                   newGridBrick[yidx][xidx] = {
                     ...newGridBrick[yidx][xidx],
                     isstart: false,
@@ -92,10 +99,12 @@ export function GridBoard() {
                     weight: 1,
                   };
 
+                  //Set shallow copy of grid with added wall as a new grid
                   setGrid(newGridBrick);
                   break;
 
                 case "addWeight":
+                  //Same procedure as above but for weight
                   let newGridWeight = grid.slice();
 
                   newGridWeight[yidx][xidx] = {
