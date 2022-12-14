@@ -82,7 +82,7 @@ export function GridBoard() {
                   break;
 
                 case "addBricks":
-                  let newGridBrick = grid.slice()
+                  let newGridBrick = grid.slice();
 
                   newGridBrick[yidx][xidx] = {
                     ...newGridBrick[yidx][xidx],
@@ -92,8 +92,25 @@ export function GridBoard() {
                     weight: 1,
                   };
 
-                  setGrid(newGridBrick)
+                  setGrid(newGridBrick);
                   break;
+
+                case "addWeight":
+                  let newGridWeight = grid.slice();
+
+                  newGridWeight[yidx][xidx] = {
+                    ...newGridWeight[yidx][xidx],
+                    isstart: false,
+                    istarget: false,
+                    iswall: false,
+                    weight: 5,
+                  };
+
+                  setGrid(newGridWeight);
+                  break;
+
+                default:
+                  return;
               }
             }}>
             {cell.weight > 1 ? <Coronavirus /> : null}
