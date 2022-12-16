@@ -199,7 +199,7 @@ const NavBar = () => {
                 onChange={(e) => {
                   setAlgo(e.target.value);
                 }}>
-                <MenuItem value="DFS">DFS</MenuItem>
+                <MenuItem value="DFS">BFS</MenuItem>
               </Select>
             </FormControl>
           </Toolbar>
