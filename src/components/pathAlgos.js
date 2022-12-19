@@ -1,4 +1,4 @@
-export function BFS(graph, hashmap, prevmap,start, target, refArr) {
+export function BFS(graph, hashmap, prevmap, start, target, refArr) {
     let queue = [start]
     let count = 0
 
@@ -32,7 +32,7 @@ export function BFS(graph, hashmap, prevmap,start, target, refArr) {
             hashmap[`${c.x} - ${c.y + 1}`] = true;
         }
 
-        if(c.y - 1 < 25 && !hashmap[`${c.x} - ${c.y - 1}`] && !graph[c.y - 1][c.x].iswall) {
+        if(c.y - 1 >= 0 && !hashmap[`${c.x} - ${c.y - 1}`] && !graph[c.y - 1][c.x].iswall) {
             queue.unshift({ x: c.x, y: c.y - 1 });
             prevmap[`${c.x} - ${c.y - 1}`] = { ...c };
             hashmap[`${c.x} - ${c.y - 1}`] = true;

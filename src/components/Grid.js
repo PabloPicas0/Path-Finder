@@ -1,15 +1,46 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useParams } from "./context";
+import { BFS } from "./pathAlgos";
 
 import { Coronavirus, EmojiFlags, FmdGood } from "@mui/icons-material";
 import { Box } from "@mui/material";
 
 export function GridBoard() {
-  const { grid, setGrid, edit, setEdit, mode, run, reset, algo, start, end } =
-    useParams();
+  const { grid, setGrid, edit, setEdit, mode, run, reset, algo, start, end } = useParams()
 
   const [refArray, setRefArray] = useState(makeRefArray(grid));
+
+  useEffect(() => {
+    const hashmap = {}
+    const prevmap = {}
+
+    for (let i = 0; i < 26; i++) {
+      for(let j = 0; j < 50; j++) {
+        hashmap[`${j} - ${i}`] = false
+        prevmap[`${j} - ${i}`] = null;
+      }
+    }
+
+    let result = BFS(grid, hashmap, prevmap, start.current, end.current, refArray)
+    const path = []
+
+    if(result != null) {
+      let current = result[0]
+
+      while(prevmap[`${current.x} - ${current.y}`] != null) {
+        path.push(current)
+        current = prevmap[`${current.x} - ${current.y}`];
+      }
+    }
+    console.log(path)
+    setTimeout(() => {
+      path.reverse().forEach((element, idx) => {
+        refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 15}ms`
+        refArray[element.x + element.y * 50].current.classList.add("path")
+      })
+    }, result[1]*9)
+  }, [run])
 
   return (
     <Box component="div" className="board">

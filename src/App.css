@@ -14,3 +14,15 @@
     align-items: center;
     background-color: white;
 }
+
+.visited {
+    background-color: blue !important;
+    transition: all 8ms cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.path {
+    background-color: yellow !important;
+    transition: all 8ms cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+
