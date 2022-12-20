@@ -12,36 +12,48 @@ export function GridBoard() {
   const [refArray, setRefArray] = useState(makeRefArray(grid));
 
   useEffect(() => {
-    const hashmap = {}
-    const prevmap = {}
+    if (algo === "BFS") {
+      const hashmap = {};
+      const prevmap = {};
 
-    for (let i = 0; i < 26; i++) {
-      for(let j = 0; j < 50; j++) {
-        hashmap[`${j} - ${i}`] = false
-        prevmap[`${j} - ${i}`] = null;
+      for (let i = 0; i < 26; i++) {
+        for (let j = 0; j < 50; j++) {
+          hashmap[`${j}-${i}`] = false;
+          prevmap[`${j}-${i}`] = null;
+        }
       }
-    }
 
-    let result = BFS(grid, hashmap, prevmap, start.current, end.current, refArray)
-    const path = []
+      let result = BFS(
+        grid,
+        hashmap,
+        prevmap,
+        start.current,
+        end.current,
+        refArray
+      );
+      const path = [];
 
-    if(result != null) {
-      let current = result[0]
+      if (result != null) {
+        let current = result[0];
 
-      while(prevmap[`${current.x} - ${current.y}`] != null) {
-        path.push(current)
-        current = prevmap[`${current.x} - ${current.y}`];
+        while (prevmap[`${current.x}-${current.y}`] != null) {
+          console.log(current, prevmap[`${current.x}-${current.y}`]);
+          path.push(current);
+          current = prevmap[`${current.x}-${current.y}`];
+        }
+
+        setTimeout(() => {
+          path.reverse().forEach((elem, index) => {
+            refArray[elem.x + elem.y * 50].current.style[
+              "transition-delay"
+            ] = `${index * 15}ms`;
+            refArray[elem.x + elem.y * 50].current.classList.add("path");
+          });
+        }, result[1] * 9);
       }
+      console.log(path);
     }
-    console.log(path)
-    setTimeout(() => {
-      path.reverse().forEach((element, idx) => {
-        refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 15}ms`
-        refArray[element.x + element.y * 50].current.classList.add("path")
-      })
-    }, result[1]*9)
-  }, [run])
-
+  }, [run]);
   return (
     <Box component="div" className="board">
       {refArray.map((elem, idx) => {
@@ -73,14 +85,13 @@ export function GridBoard() {
 
               switch (mode) {
                 case "setStart":
-                  //Make new clear grid with all values to false 
+                  //Make new clear grid with all values to false
                   let newGridStart = grid.map((element) => {
                     return element.map((item) => {
                       if (!item.isstart) return item;
                       return { ...item, isstart: false };
                     });
                   });
-
 
                   //Give this clear grid new start value based on his index
                   newGridStart[yidx][xidx] = {
@@ -91,7 +102,7 @@ export function GridBoard() {
                     weight: 1,
                   };
 
-                  // Set updated values of new grid 
+                  // Set updated values of new grid
                   start.current = { x: xidx, y: yidx };
                   setGrid(newGridStart);
                   break;
@@ -121,7 +132,7 @@ export function GridBoard() {
                   //Make a shallow coppy of grid
                   let newGridBrick = grid.slice();
 
-                  //Set wall on new shallow copy based on y and x index 
+                  //Set wall on new shallow copy based on y and x index
                   newGridBrick[yidx][xidx] = {
                     ...newGridBrick[yidx][xidx],
                     isstart: false,
