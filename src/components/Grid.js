@@ -31,6 +31,7 @@ export function GridBoard() {
         end.current,
         refArray
       );
+
       const path = [];
 
       if (result != null) {
@@ -42,18 +43,25 @@ export function GridBoard() {
           current = prevmap[`${current.x}-${current.y}`];
         }
 
+
+
         setTimeout(() => {
+          if(prevmap[`${current.x}-${current.y}`] === null) {
+            refArray[current.x + current.y * 50].current.classList.add("path") //exception due to starting point in prevmap is null so we add path class to change color
+          }
+
           path.reverse().forEach((elem, index) => {
             refArray[elem.x + elem.y * 50].current.style[
               "transition-delay"
-            ] = `${index * 15}ms`;
+            ] = `${index * 20}ms`;
             refArray[elem.x + elem.y * 50].current.classList.add("path");
           });
-        }, result[1] * 9);
+        }, result[1] * 8);
       }
-      console.log(path);
+      console.log(path, prevmap);
     }
   }, [run]);
+  
   return (
     <Box component="div" className="board">
       {refArray.map((elem, idx) => {

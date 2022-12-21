@@ -8,6 +8,7 @@ export function BFS(graph, hashmap, prevmap, start, target, refArr) {
         count++
         let c = queue.pop()
 
+        refArr[c.x + c.y * 50].current.style['transition-delay']=`${count * 7}ms`
         refArr[c.x + c.y * 50].current.classList.add("visited")
 
         if(c.x === target.x && c.y === target.y) {
