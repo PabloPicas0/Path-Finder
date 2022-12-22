@@ -5,6 +5,7 @@ import {
   AppBar,
   Box,
   createTheme,
+  Divider,
   FormControl,
   IconButton,
   InputLabel,
@@ -27,10 +28,10 @@ import {
 } from "@mui/icons-material";
 
 const modes = [
-  { mode: "setStart", icon: <FmdGood />, name: "Start" },
-  { mode: "setTarget", icon: <EmojiFlags />, name: "Target" },
-  { mode: "addBricks", icon: <Hive />, name: "Bricks" },
-  { mode: "addWeight", icon: <Coronavirus />, name: "Weight" },
+  { mode: "setStart", icon: <FmdGood sx={{ mr: 1 }} />, name: "Start" },
+  { mode: "setTarget", icon: <EmojiFlags sx={{ mr: 1 }} />, name: "Target" },
+  { mode: "addBricks", icon: <Hive sx={{ mr: 1 }} />, name: "Bricks" },
+  { mode: "addWeight", icon: <Coronavirus sx={{ mr: 1 }} />, name: "Weight" },
 ];
 
 const darkTheme = createTheme({
@@ -165,6 +166,43 @@ const NavBar = () => {
               }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
+              <MenuItem>
+                <IconButton
+                  size="small"
+                  edge="start"
+                  color="inherit"
+                  aria-label="option"
+                  sx={{
+                    mr: 10,
+                    display: { xs: "inline-flex", lg: "none" },
+                  }}
+                  onClick={() => {
+                    setRun((prev) => !prev);
+                  }}>
+                  <PlayArrow sx={{ mr: 1 }} />
+                  Run
+                </IconButton>
+              </MenuItem>
+
+              <MenuItem>
+                <IconButton
+                  size="small"
+                  edge="start"
+                  color="inherit"
+                  aria-label="option"
+                  sx={{
+                    mr: 10,
+                    display: { xs: "inline-flex", lg: "none" },
+                  }}
+                  onClick={() => {
+                    setReset((prev) => !prev);
+                  }}>
+                  <Refresh sx={{ mr: 1 }} />
+                  Reset
+                </IconButton>
+              </MenuItem>
+
+              <Divider />
               {modes.map((elements, idx) => (
                 <MenuItem
                   key={idx}

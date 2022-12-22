@@ -37,8 +37,8 @@ export function GridBoard() {
       if (result != null) {
         let current = result[0];
 
+        console.log(current, prevmap[`${current.x}-${current.y}`]);
         while (prevmap[`${current.x}-${current.y}`] != null) {
-          console.log(current, prevmap[`${current.x}-${current.y}`]);
           path.push(current);
           current = prevmap[`${current.x}-${current.y}`];
         }
@@ -53,7 +53,7 @@ export function GridBoard() {
           path.reverse().forEach((elem, index) => {
             refArray[elem.x + elem.y * 50].current.style[
               "transition-delay"
-            ] = `${index * 20}ms`;
+            ] = `${index * 10}ms`;
             refArray[elem.x + elem.y * 50].current.classList.add("path");
           });
         }, result[1] * 8);
