@@ -38,6 +38,7 @@ export function GridBoard() {
         let current = result[0];
 
         console.log(current, prevmap[`${current.x}-${current.y}`]);
+
         while (prevmap[`${current.x}-${current.y}`] != null) {
           path.push(current);
           current = prevmap[`${current.x}-${current.y}`];
@@ -61,6 +62,14 @@ export function GridBoard() {
       console.log(path, prevmap);
     }
   }, [run]);
+
+  useEffect(() => {
+    refArray.forEach(element => {
+      element.current.style["transition-delay"] = "0ms"
+      element.current.classList.remove("visited");
+      element.current.classList.remove("path")
+    })
+  }, [reset])
   
   return (
     <Box component="div" className="board">

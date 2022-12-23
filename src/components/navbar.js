@@ -28,10 +28,10 @@ import {
 } from "@mui/icons-material";
 
 const modes = [
-  { mode: "setStart", icon: <FmdGood sx={{ mr: 1 }} />, name: "Start" },
-  { mode: "setTarget", icon: <EmojiFlags sx={{ mr: 1 }} />, name: "Target" },
-  { mode: "addBricks", icon: <Hive sx={{ mr: 1 }} />, name: "Bricks" },
-  { mode: "addWeight", icon: <Coronavirus sx={{ mr: 1 }} />, name: "Weight" },
+  { mode: "setStart", icon: <FmdGood />, name: "Start" },
+  { mode: "setTarget", icon: <EmojiFlags />, name: "Target" },
+  { mode: "addBricks", icon: <Hive />, name: "Bricks" },
+  { mode: "addWeight", icon: <Coronavirus />, name: "Weight" },
 ];
 
 const darkTheme = createTheme({
@@ -214,6 +214,7 @@ const NavBar = () => {
                     edge="start"
                     color="inherit"
                     aria-label="option"
+                    sx={{gap: 1}}
                     onClick={() => {
                       if (mode === elements.mode) {
                         setMode(null);
