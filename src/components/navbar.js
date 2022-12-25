@@ -239,6 +239,7 @@ const NavBar = () => {
                   setAlgo(e.target.value);
                 }}>
                 <MenuItem value="BFS">BFS</MenuItem>
+                <MenuItem value="DFS">DFS</MenuItem>
               </Select>
             </FormControl>
           </Toolbar>
