@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useParams } from "./context";
-import { BFS } from "./pathAlgos";
+import { BFS, DFS } from "./pathAlgos";
 
 import { Coronavirus, EmojiFlags, FmdGood } from "@mui/icons-material";
 import { Box } from "@mui/material";
@@ -12,16 +12,17 @@ export function GridBoard() {
   const [refArray, setRefArray] = useState(makeRefArray(grid));
 
   useEffect(() => {
-    if (algo === "BFS") {
-      const hashmap = {};
-      const prevmap = {};
+    const hashmap = {};
+    const prevmap = {};
 
-      for (let i = 0; i < 26; i++) {
-        for (let j = 0; j < 50; j++) {
-          hashmap[`${j}-${i}`] = false;
-          prevmap[`${j}-${i}`] = null;
-        }
+    for (let i = 0; i < 26; i++) {
+      for (let j = 0; j < 50; j++) {
+        hashmap[`${j}-${i}`] = false;
+        prevmap[`${j}-${i}`] = null;
       }
+    }
+
+    if (algo === "BFS") {
 
       let result = BFS(
         grid,
@@ -37,8 +38,7 @@ export function GridBoard() {
       if (result != null) {
         let current = result[0];
 
-        console.log(current, prevmap[`${current.x}-${current.y}`]);
-
+        
         while (prevmap[`${current.x}-${current.y}`] != null) {
           path.push(current);
           current = prevmap[`${current.x}-${current.y}`];
@@ -59,7 +59,28 @@ export function GridBoard() {
           });
         }, result[1] * 8);
       }
-      console.log(path, prevmap);
+    }
+
+    if(algo === "DFS") {
+      let result = DFS(grid, hashmap, prevmap, start.current, end.current, refArray)
+
+      const path = []
+
+      if(result !== null) {
+        let current = result[0]
+
+        while(prevmap[`${current.x}-${current.y}`] !== null) {
+          path.push(current)
+          current = prevmap[`${current.x}-${current.y}`]
+        }
+
+        setTimeout(() => {
+          path.reverse().forEach((element, idx) => {
+            refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 10}ms`
+            refArray[element.x + element.y * 50].current.classList.add("path")
+          })
+        }, result[1] * 8)
+      }
     }
   }, [run]);
 
