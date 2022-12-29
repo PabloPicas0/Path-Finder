@@ -51,7 +51,7 @@ export function DFS(graph, hashmap, prevmap, start, end, refArr) {
     while(queue.length > 0) {
         count++
         let c = queue.shift()
-        console.log(c)
+        
         refArr[c.x + c.y * 50].current.style['transition-delay']=`${count * 7}ms`
         refArr[c.x + c.y * 50].current.classList.add("visited")
 

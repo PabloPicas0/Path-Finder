@@ -214,7 +214,7 @@ const NavBar = () => {
                     edge="start"
                     color="inherit"
                     aria-label="option"
-                    sx={{gap: 1}}
+                    sx={{ gap: 1 }}
                     onClick={() => {
                       if (mode === elements.mode) {
                         setMode(null);
@@ -240,6 +240,7 @@ const NavBar = () => {
                 }}>
                 <MenuItem value="BFS">BFS</MenuItem>
                 <MenuItem value="DFS">DFS</MenuItem>
+                <MenuItem value="Dijkstra">Dijkstra</MenuItem>
               </Select>
             </FormControl>
           </Toolbar>
