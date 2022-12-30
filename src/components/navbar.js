@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import {
-  Coronavirus,
+  DepartureBoard,
   EmojiFlags,
   FmdGood,
   Hive,
@@ -31,7 +31,7 @@ const modes = [
   { mode: "setStart", icon: <FmdGood />, name: "Start" },
   { mode: "setTarget", icon: <EmojiFlags />, name: "Target" },
   { mode: "addBricks", icon: <Hive />, name: "Bricks" },
-  { mode: "addWeight", icon: <Coronavirus />, name: "Weight" },
+  { mode: "addWeight", icon: <DepartureBoard />, name: "Weight" },
 ];
 
 const darkTheme = createTheme({

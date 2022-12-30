@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useParams } from "./context";
-import { BFS, DFS } from "./pathAlgos";
+import { BFS, DFS, Dijkstra } from "./pathAlgos";
 
-import { Coronavirus, EmojiFlags, FmdGood } from "@mui/icons-material";
+import { DepartureBoard, EmojiFlags, FmdGood } from "@mui/icons-material";
 import { Box } from "@mui/material";
 
 export function GridBoard() {
@@ -84,6 +84,16 @@ export function GridBoard() {
             refArray[element.x + element.y * 50].current.classList.add("path")
           })
         }, result[1] * 8)
+      }
+    }
+
+    if(algo === "Dijkstra") {
+      let result = Dijkstra(grid, hashmap, prevmap, start.current, end.current, refArray)
+
+      const path = []
+
+      if(result !== null) {
+        console.log(prevmap)
       }
     }
   }, [run]);
@@ -206,7 +216,7 @@ export function GridBoard() {
                   return;
               }
             }}>
-            {cell.weight > 1 ? <Coronavirus /> : null}
+            {cell.weight > 1 ? <DepartureBoard /> : null}
             {cell.isstart ? <FmdGood /> : null}
             {cell.istarget ? <EmojiFlags /> : null}
           </div>
