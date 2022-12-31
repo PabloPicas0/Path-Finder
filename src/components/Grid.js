@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useParams } from "./context";
-import { BFS, DFS, Dijkstra } from "./pathAlgos";
+import { BFS, DFS, Dijkstra, shortestDistanceNode } from "./pathAlgos";
 
 import { DepartureBoard, EmojiFlags, FmdGood } from "@mui/icons-material";
 import { Box } from "@mui/material";
 
 export function GridBoard() {
-  const { grid, setGrid, edit, setEdit, mode, run, reset, algo, start, end } = useParams()
+  const { grid, setGrid, edit, setEdit, mode, run, reset, algo, start, end } = useParams();
 
   const [refArray, setRefArray] = useState(makeRefArray(grid));
 
@@ -23,89 +23,92 @@ export function GridBoard() {
     }
 
     if (algo === "BFS") {
-
-      let result = BFS(
-        grid,
-        hashmap,
-        prevmap,
-        start.current,
-        end.current,
-        refArray,
-      );
+      let result = BFS(grid, hashmap, prevmap, start.current, end.current, refArray);
 
       const path = [];
 
       if (result != null) {
         let current = result[0];
 
-        
         while (prevmap[`${current.x}-${current.y}`] != null) {
           path.push(current);
           current = prevmap[`${current.x}-${current.y}`];
-        }
-
-
-
-        setTimeout(() => {
-          if(prevmap[`${current.x}-${current.y}`] === null) {
-            refArray[current.x + current.y * 50].current.classList.add("path") //exception due to starting point in prevmap is null so we add path class to change color
-          }
-
-          path.reverse().forEach((elem, index) => {
-            refArray[elem.x + elem.y * 50].current.style[
-              "transition-delay"
-            ] = `${index * 10}ms`;
-            refArray[elem.x + elem.y * 50].current.classList.add("path");
-          });
-        }, result[1] * 8);
-      }
-    }
-
-    if(algo === "DFS") {
-      let result = DFS(grid, hashmap, prevmap, start.current, end.current, refArray)
-
-      const path = []
-
-      if(result !== null) {
-        let current = result[0]
-
-        while(prevmap[`${current.x}-${current.y}`] !== null) {
-          path.push(current)
-          current = prevmap[`${current.x}-${current.y}`]
         }
 
         setTimeout(() => {
           if (prevmap[`${current.x}-${current.y}`] === null) {
             refArray[current.x + current.y * 50].current.classList.add("path"); //exception due to starting point in prevmap is null so we add path class to change color
           }
-          
-          path.reverse().forEach((element, idx) => {
-            refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 10}ms`
-            refArray[element.x + element.y * 50].current.classList.add("path")
-          })
-        }, result[1] * 8)
+
+          path.reverse().forEach((elem, index) => {
+            refArray[elem.x + elem.y * 50].current.style["transition-delay"] = `${index * 10}ms`;
+            refArray[elem.x + elem.y * 50].current.classList.add("path");
+          });
+        }, result[1] * 8);
       }
     }
 
-    if(algo === "Dijkstra") {
-      let result = Dijkstra(grid, hashmap, prevmap, start.current, end.current, refArray)
+    if (algo === "DFS") {
+      let result = DFS(grid, hashmap, prevmap, start.current, end.current, refArray);
 
-      const path = []
+      const path = [];
 
-      if(result !== null) {
-        console.log(prevmap)
+      if (result !== null) {
+        let current = result[0];
+
+        while (prevmap[`${current.x}-${current.y}`] !== null) {
+          path.push(current);
+          current = prevmap[`${current.x}-${current.y}`];
+        }
+
+        setTimeout(() => {
+          if (prevmap[`${current.x}-${current.y}`] === null) {
+            refArray[current.x + current.y * 50].current.classList.add("path"); //exception due to starting point in prevmap is null so we add path class to change color
+          }
+
+          path.reverse().forEach((element, idx) => {
+            refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 10}ms`;
+            refArray[element.x + element.y * 50].current.classList.add("path");
+          });
+        }, result[1] * 8);
+      }
+    }
+
+    if (algo === "Dijkstra") {
+      let result = Dijkstra(grid, hashmap, prevmap, start.current, end.current, refArray);
+
+      const path = [];
+
+      if (result !== null) {
+        let current = result[0];
+
+        while (prevmap[`${current.x}-${current.y}`] !== null) {
+          path.push(current);
+          current = prevmap[`${current.x}-${current.y}`];
+        }
+
+        setTimeout(() => {
+          if (prevmap[`${current.x}-${current.y}`] === null) {
+            refArray[current.x + current.y * 50].current.classList.add("path"); 
+          }
+
+          path.reverse().forEach((element, idx) => {
+            refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 10}ms`;
+            refArray[element.x + element.y * 50].current.classList.add("path");
+          });
+        }, result[1] * 8);
       }
     }
   }, [run]);
 
   useEffect(() => {
-    refArray.forEach(element => {
-      element.current.style["transition-delay"] = "0ms"
+    refArray.forEach((element) => {
+      element.current.style["transition-delay"] = "0ms";
       element.current.classList.remove("visited");
-      element.current.classList.remove("path")
-    })
-  }, [reset])
-  
+      element.current.classList.remove("path");
+    });
+  }, [reset]);
+
   return (
     <Box component="div" className="board">
       {refArray.map((elem, idx) => {
