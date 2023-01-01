@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useParams } from "./context";
-import { BFS, DFS, Dijkstra, shortestDistanceNode } from "./pathAlgos";
+import { BFS, DFS, Dijkstra } from "./pathAlgos";
+import { randomInt } from "./startGrid";
 
 import { DepartureBoard, EmojiFlags, FmdGood } from "@mui/icons-material";
 import { Box } from "@mui/material";
@@ -144,7 +145,7 @@ export function GridBoard() {
                   let newGridStart = grid.map((element) => {
                     return element.map((item) => {
                       if (!item.isstart) return item;
-                      return { ...item, isstart: false };
+                      return { ...item, isstart: false, weight: randomInt(1,5) };
                     });
                   });
 
@@ -154,7 +155,7 @@ export function GridBoard() {
                     isstart: true,
                     istarget: false,
                     iswall: false,
-                    weight: 1,
+                    weight: 0,
                   };
 
                   // Set updated values of new grid
@@ -167,7 +168,7 @@ export function GridBoard() {
                   let newGridTarget = grid.map((element) => {
                     return element.map((item) => {
                       if (!item.istarget) return item;
-                      return { ...item, istarget: false };
+                      return { ...item, istarget: false, weight: randomInt(1, 5) };
                     });
                   });
 
@@ -176,7 +177,7 @@ export function GridBoard() {
                     isstart: false,
                     istarget: true,
                     iswall: false,
-                    weight: 1,
+                    weight: 0,
                   };
 
                   end.current = { x: xidx, y: yidx };
@@ -200,26 +201,11 @@ export function GridBoard() {
                   setGrid(newGridBrick);
                   break;
 
-                case "addWeight":
-                  //Same procedure as above but for weight
-                  let newGridWeight = grid.slice();
-
-                  newGridWeight[yidx][xidx] = {
-                    ...newGridWeight[yidx][xidx],
-                    isstart: false,
-                    istarget: false,
-                    iswall: false,
-                    weight: 5,
-                  };
-
-                  setGrid(newGridWeight);
-                  break;
-
                 default:
                   return;
               }
             }}>
-            {cell.weight > 1 && algo === "Dijkstra" ? cell.weight : null}
+            {cell.weight > 0 && algo === "Dijkstra" ? cell.weight : null}
             {cell.isstart ? <FmdGood /> : null}
             {cell.istarget ? <EmojiFlags /> : null}
           </div>

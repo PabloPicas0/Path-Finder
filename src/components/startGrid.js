@@ -10,7 +10,7 @@ export function createGrid(width, height) {
         y: i,
         isstart: false,
         istarget: false,
-        weight: randomInt(2, 6),
+        weight: randomInt(1, 5),
         iswall: false,
       });
     }
@@ -18,15 +18,15 @@ export function createGrid(width, height) {
   }
 
   grid[Math.floor(height / 2)][Math.floor(width / 2)].isstart = true; //this set starting point for 2D array of objects
-  grid[Math.floor(height / 2)][Math.floor(width / 2)].weight = 1; //this set weight starting point for 2D array of objects
+  grid[Math.floor(height / 2)][Math.floor(width / 2)].weight = 0; //this set weight starting point for 2D array of objects
 
   grid[height - 25][width - 49].istarget = true; // this set target point for 2D array of objects
-  grid[height - 25][width - 49].weight = 1; // this set weight target point for 2D array of objects
+  grid[height - 25][width - 49].weight = 0; // this set weight target point for 2D array of objects
 
   return grid;
 }
 
-const randomInt = (min, max) => {
+export const randomInt = (min, max) => {
   min = Math.ceil(min)
   max = Math.floor(max)
 
