@@ -219,7 +219,7 @@ export function GridBoard() {
                   return;
               }
             }}>
-            {cell.weight > 1 ? <DepartureBoard /> : null}
+            {cell.weight > 1 && algo === "Dijkstra" ? cell.weight : null}
             {cell.isstart ? <FmdGood /> : null}
             {cell.istarget ? <EmojiFlags /> : null}
           </div>
