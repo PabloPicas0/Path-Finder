@@ -32,7 +32,7 @@ export function GridBoard() {
         let current = result[0];
 
         while (prevmap[`${current.x}-${current.y}`] != null) {
-          path.push(current);
+          path.unshift(current);
           current = prevmap[`${current.x}-${current.y}`];
         }
 
@@ -41,7 +41,7 @@ export function GridBoard() {
             refArray[current.x + current.y * 50].current.classList.add("path"); //exception due to starting point in prevmap is null so we add path class to change color
           }
 
-          path.reverse().forEach((elem, index) => {
+          path.forEach((elem, index) => {
             refArray[elem.x + elem.y * 50].current.style["transition-delay"] = `${index * 10}ms`;
             refArray[elem.x + elem.y * 50].current.classList.add("path");
           });
@@ -58,7 +58,7 @@ export function GridBoard() {
         let current = result[0];
 
         while (prevmap[`${current.x}-${current.y}`] !== null) {
-          path.push(current);
+          path.unshift(current);
           current = prevmap[`${current.x}-${current.y}`];
         }
 
@@ -67,7 +67,7 @@ export function GridBoard() {
             refArray[current.x + current.y * 50].current.classList.add("path"); //exception due to starting point in prevmap is null so we add path class to change color
           }
 
-          path.reverse().forEach((element, idx) => {
+          path.forEach((element, idx) => {
             refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 10}ms`;
             refArray[element.x + element.y * 50].current.classList.add("path");
           });
@@ -84,7 +84,7 @@ export function GridBoard() {
         let current = result[0];
 
         while (prevmap[`${current.x}-${current.y}`] !== null) {
-          path.push(current);
+          path.unshift(current);
           current = prevmap[`${current.x}-${current.y}`];
         }
 
@@ -93,7 +93,7 @@ export function GridBoard() {
             refArray[current.x + current.y * 50].current.classList.add("path"); 
           }
 
-          path.reverse().forEach((element, idx) => {
+          path.forEach((element, idx) => {
             refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 10}ms`;
             refArray[element.x + element.y * 50].current.classList.add("path");
           });
@@ -159,7 +159,7 @@ export function GridBoard() {
                   };
 
                   // Set updated values of new grid
-                  start.current = { x: xidx, y: yidx };
+                  start.current = { x: xidx, y: yidx, weight: 0 };
                   setGrid(newGridStart);
                   break;
 
@@ -180,7 +180,7 @@ export function GridBoard() {
                     weight: 0,
                   };
 
-                  end.current = { x: xidx, y: yidx };
+                  end.current = { x: xidx, y: yidx, weight: 0 };
                   setGrid(newGridTarget);
                   break;
 
