@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useParams } from "./context";
-import { BFS, DFS, Dijkstra } from "./pathAlgos";
+import { aStar, BFS, DFS, Dijkstra } from "./pathAlgos";
 import { randomInt } from "./startGrid";
 
-import { DepartureBoard, EmojiFlags, FmdGood } from "@mui/icons-material";
+import { EmojiFlags, FmdGood } from "@mui/icons-material";
 import { Box } from "@mui/material";
 
 export function GridBoard() {
@@ -90,7 +90,33 @@ export function GridBoard() {
 
         setTimeout(() => {
           if (prevmap[`${current.x}-${current.y}`] === null) {
-            refArray[current.x + current.y * 50].current.classList.add("path"); 
+            refArray[current.x + current.y * 50].current.classList.add("path");
+          }
+
+          path.forEach((element, idx) => {
+            refArray[element.x + element.y * 50].current.style["transition-delay"] = `${idx * 10}ms`;
+            refArray[element.x + element.y * 50].current.classList.add("path");
+          });
+        }, result[1] * 8);
+      }
+    }
+
+    if (algo === "A*") {
+      let result = aStar(grid, hashmap, prevmap, start.current, end.current, refArray);
+
+      const path = [];
+
+      if (result !== null) {
+        let current = result[0];
+
+        while (prevmap[`${current.x}-${current.y}`] !== null) {
+          path.unshift(current);
+          current = prevmap[`${current.x}-${current.y}`];
+        }
+
+        setTimeout(() => {
+          if (prevmap[`${current.x}-${current.y}`] === null) {
+            refArray[current.x + current.y * 50].current.classList.add("path");
           }
 
           path.forEach((element, idx) => {
@@ -145,7 +171,7 @@ export function GridBoard() {
                   let newGridStart = grid.map((element) => {
                     return element.map((item) => {
                       if (!item.isstart) return item;
-                      return { ...item, isstart: false, weight: randomInt(1,5) };
+                      return { ...item, isstart: false, weight: randomInt(1, 5) };
                     });
                   });
 
@@ -205,7 +231,7 @@ export function GridBoard() {
                   return;
               }
             }}>
-            {cell.weight > 0 && algo === "Dijkstra" ? cell.weight : null}
+            {cell.weight > 0 && (algo === "Dijkstra" || algo === "A*") ? cell.weight : null}
             {cell.isstart ? <FmdGood /> : null}
             {cell.istarget ? <EmojiFlags /> : null}
           </div>

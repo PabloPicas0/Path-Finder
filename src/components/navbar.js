@@ -18,7 +18,6 @@ import {
   Typography,
 } from "@mui/material";
 import {
-  DepartureBoard,
   EmojiFlags,
   FmdGood,
   Hive,
@@ -59,10 +58,7 @@ const NavBar = () => {
       <ThemeProvider theme={darkTheme}>
         <AppBar position="static">
           <Toolbar>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, ml: 1 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 1 }}>
               Options
             </Typography>
 
@@ -240,6 +236,7 @@ const NavBar = () => {
                 <MenuItem value="BFS">BFS</MenuItem>
                 <MenuItem value="DFS">DFS</MenuItem>
                 <MenuItem value="Dijkstra">Dijkstra</MenuItem>
+                <MenuItem value="A*">A*</MenuItem>
               </Select>
             </FormControl>
           </Toolbar>
