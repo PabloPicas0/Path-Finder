@@ -24,6 +24,8 @@ export const ParamsProvider = ({ children }) => {
 
   useEffect(() => {
     resetGrid();
+    start.current = { x: 25, y: 13, weight: 0 };
+    end.current = { x: 1, y: 1, weight: 0 };
   }, [reset]);
 
   return (
