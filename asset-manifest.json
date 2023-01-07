@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/PabloPicas0/Path-Finder/static/css/main.d89a551b.css",
+    "main.js": "/PabloPicas0/Path-Finder/static/js/main.47922c26.js",
+    "static/js/787.ab4fce9e.chunk.js": "/PabloPicas0/Path-Finder/static/js/787.ab4fce9e.chunk.js",
+    "index.html": "/PabloPicas0/Path-Finder/index.html",
+    "main.d89a551b.css.map": "/PabloPicas0/Path-Finder/static/css/main.d89a551b.css.map",
+    "main.47922c26.js.map": "/PabloPicas0/Path-Finder/static/js/main.47922c26.js.map",
+    "787.ab4fce9e.chunk.js.map": "/PabloPicas0/Path-Finder/static/js/787.ab4fce9e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d89a551b.css",
+    "static/js/main.47922c26.js"
+  ]
+}
