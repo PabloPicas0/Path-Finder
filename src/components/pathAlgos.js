@@ -194,6 +194,7 @@ export function aStar(graph, hashmap, prevmap, start, end, refArr) {
       });
     }
   }
+  return null
 }
 
 function sortByWeight(queue) {

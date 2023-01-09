@@ -161,75 +161,10 @@ export function GridBoard() {
               setEdit(false);
             }}
             onMouseMove={() => {
-              if (!edit) return;
-              const current = grid[yidx][xidx];
-              if (current.isstart || current.istarget) return; // prevents form adding walls and weight on start and target cells
-
-              switch (mode) {
-                case "setStart":
-                  //Make new clear grid with all values to false
-                  let newGridStart = grid.map((element) => {
-                    return element.map((item) => {
-                      if (!item.isstart) return item;
-                      return { ...item, isstart: false, weight: randomInt(1, 5) };
-                    });
-                  });
-
-                  //Give this clear grid new start value based on his index
-                  newGridStart[yidx][xidx] = {
-                    ...newGridStart[yidx][xidx],
-                    isstart: true,
-                    istarget: false,
-                    iswall: false,
-                    weight: 0,
-                  };
-
-                  // Set updated values of new grid
-                  start.current = { x: xidx, y: yidx, weight: 0 };
-                  setGrid(newGridStart);
-                  break;
-
-                case "setTarget":
-                  //Here we have same proceure as above but for target
-                  let newGridTarget = grid.map((element) => {
-                    return element.map((item) => {
-                      if (!item.istarget) return item;
-                      return { ...item, istarget: false, weight: randomInt(1, 5) };
-                    });
-                  });
-
-                  newGridTarget[yidx][xidx] = {
-                    ...newGridTarget[yidx][xidx],
-                    isstart: false,
-                    istarget: true,
-                    iswall: false,
-                    weight: 0,
-                  };
-
-                  end.current = { x: xidx, y: yidx, weight: 0 };
-                  setGrid(newGridTarget);
-                  break;
-
-                case "addBricks":
-                  //Make a shallow coppy of grid
-                  let newGridBrick = grid.slice();
-
-                  //Set wall on new shallow copy based on y and x index
-                  newGridBrick[yidx][xidx] = {
-                    ...newGridBrick[yidx][xidx],
-                    isstart: false,
-                    istarget: false,
-                    iswall: true,
-                    weight: 1,
-                  };
-
-                  //Set shallow copy of grid with added wall as a new grid
-                  setGrid(newGridBrick);
-                  break;
-
-                default:
-                  return;
-              }
+              newParams(edit, grid, setGrid, xidx, yidx, mode, start, end);
+            }}
+            onTouchMove={() => {
+              newParams(edit, grid, setGrid, xidx, yidx, mode, start, end);
             }}>
             {cell.weight > 0 && (algo === "Dijkstra" || algo === "A*") ? cell.weight : null}
             {cell.isstart ? <FmdGood /> : null}
@@ -251,4 +186,76 @@ function makeRefArray(grid) {
   });
 
   return array;
+}
+
+function newParams(edit, grid, setGrid, xidx, yidx, mode, start, end) {
+  if (!edit) return;
+  const current = grid[yidx][xidx];
+  if (current.isstart || current.istarget) return; // prevents form adding walls and weight on start and target cells
+
+  switch (mode) {
+    case "setStart":
+      //Make new clear grid with all values to false
+      let newGridStart = grid.map((element) => {
+        return element.map((item) => {
+          if (!item.isstart) return item;
+          return { ...item, isstart: false, weight: randomInt(1, 5) };
+        });
+      });
+
+      //Give this clear grid new start value based on his index
+      newGridStart[yidx][xidx] = {
+        ...newGridStart[yidx][xidx],
+        isstart: true,
+        istarget: false,
+        iswall: false,
+        weight: 0,
+      };
+
+      // Set updated values of new grid
+      start.current = { x: xidx, y: yidx, weight: 0 };
+      setGrid(newGridStart);
+      break;
+
+    case "setTarget":
+      //Here we have same proceure as above but for target
+      let newGridTarget = grid.map((element) => {
+        return element.map((item) => {
+          if (!item.istarget) return item;
+          return { ...item, istarget: false, weight: randomInt(1, 5) };
+        });
+      });
+
+      newGridTarget[yidx][xidx] = {
+        ...newGridTarget[yidx][xidx],
+        isstart: false,
+        istarget: true,
+        iswall: false,
+        weight: 0,
+      };
+
+      end.current = { x: xidx, y: yidx, weight: 0 };
+      setGrid(newGridTarget);
+      break;
+
+    case "addBricks":
+      //Make a shallow coppy of grid
+      let newGridBrick = grid.slice();
+
+      //Set wall on new shallow copy based on y and x index
+      newGridBrick[yidx][xidx] = {
+        ...newGridBrick[yidx][xidx],
+        isstart: false,
+        istarget: false,
+        iswall: true,
+        weight: 1,
+      };
+
+      //Set shallow copy of grid with added wall as a new grid
+      setGrid(newGridBrick);
+      break;
+
+    default:
+      return;
+  }
 }
