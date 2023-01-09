@@ -159,6 +159,7 @@ export function GridBoard() {
             }}
             onTouchStart={() => {
               setEdit(true)
+              newParams(edit, grid, setGrid, xidx, yidx, mode, start, end);
             }}
             onTouchEnd={() => {
               setEdit(false)
@@ -167,9 +168,6 @@ export function GridBoard() {
               setEdit(false);
             }}
             onMouseMove={() => {
-              newParams(edit, grid, setGrid, xidx, yidx, mode, start, end);
-            }}
-            onTouchMoveCapture={() => {
               newParams(edit, grid, setGrid, xidx, yidx, mode, start, end);
             }}>
             {cell.weight > 0 && (algo === "Dijkstra" || algo === "A*") ? cell.weight : null}
