@@ -157,6 +157,12 @@ export function GridBoard() {
             onMouseDown={() => {
               setEdit(true);
             }}
+            onTouchStart={() => {
+              setEdit(true)
+            }}
+            onTouchEnd={() => {
+              setEdit(false)
+            }}
             onMouseUp={() => {
               setEdit(false);
             }}
