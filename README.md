@@ -1,4 +1,4 @@
-# Sorting Visualizer
+# Path Finder
 Path Finder shows how path finding algorithms 
 such as Breadth-first search, Depth-first search, dijkstra algorithm and a* works.
 
